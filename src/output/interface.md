@@ -78,3 +78,64 @@
 | `keyword` | string | 隐藏奖励词内容 |
 | `jibi` | jibi | 奖励击毙结算 |
 
+## 成功接龙
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `father_node_id` | integer | 父节点编号 |
+| `node_id` | interger | 接龙节点编号 |
+| `dragon_content` | string | 接龙内容 |
+| `fork` | boolean | 分叉 |
+
+## 添加状态
+
+## 触发状态
+
+## 击毙变动
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `jibi_change` | interger | 击毙变动值 |
+| `reason` | string | 变动理由 |
+
+## 获得物品
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `subject_id` | interger | 物品ID |
+| `subject_name` | string | 物品名 |
+| `subject_description` | string | 物品描述 |
+
+## 使用物品
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `subject_id` | interger | 物品ID |
+| `subject_name` | string | 物品名 |
+| `subject_effect` | string | 物品效果 |
+
+## 获得卡牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `card_id` |
+| `card_name` |
+| `card_description` |
+| `consumed_on_draw` | boolean |
+
+## 使用卡牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `is_draw_and_use` | boolean |
+| `card_id` |
+| `card_name` |
+| `card_effect` |
+
+## 获得装备
+
+## 使用装备
+
+## 活动
+
+## 麻将
