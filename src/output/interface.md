@@ -62,6 +62,26 @@
 | 600 | 节点未找到 | 否 |
 | 601 | 节点已分叉，并不可再次分叉 | 否 |
 
+## choose_failed 选择失败
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+
+## choose 选择
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `object` | string | 需要选择的物品，见下表 |
+| `cannot_choose` | `list[integer]` | 在`object`是`hand_card`时使用，代表手牌的第几张不可选择 |
+| `card_list` | `list[integer]` | 在`object`是`card`时使用，代表需要从中选择的卡牌列表 |
+
+| `object` | 说明 |
+| -------- | ---- |
+| `hand_card` | 手牌 |
+| `card` | 卡牌列表 |
+| `player` | 玩家 |
+| `hand_maj` | 手中的麻将牌 |
+
 ## keyword 接到奖励词
 
 | 字段名 | 数据类型 | 说明 |
