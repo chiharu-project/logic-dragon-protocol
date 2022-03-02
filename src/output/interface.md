@@ -66,14 +66,36 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
+| `reason` | string | 原因 |
+
+| `reason` | 说明 |
+| -------- | ---- |
+| `not_active` | 玩家非活跃 |
+| `cant_choose` | 没有可选择的对象 |
+
+## response_invalid 选择对象不符合要求
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `error_code` | integer | 异常代码，表示失败原因 |
+| `error_msg` | string | 其他原因说明，有时有用 |
+
+| `error_code` | 说明 | 是否需要`error_msg` |
+| ------------ | ---- | ----------------- |
+| 0 | 响应类型不合规 | 否 |
+| 1\*\* | 选择类 | - |
+| 100 | 选择数不在范围内 | 否 |
+| 110 | 选择手牌不在手牌列表中 | 否 |
 
 ## choose 选择
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `object` | string | 需要选择的物品，见下表 |
-| `cannot_choose` | `list[integer]` | 在`object`是`hand_card`时使用，代表手牌的第几张不可选择 |
+| `can_choose` | `list[integer]` | 在`object`是`hand_card`时使用，代表手牌的第几张可选择 |
 | `card_list` | `list[integer]` | 在`object`是`card`时使用，代表需要从中选择的卡牌列表 |
+| `min` | integer | 选择的最少的个数 |
+| `max` | integer | 选择的最多的个数 |
 
 | `object` | 说明 |
 | -------- | ---- |
