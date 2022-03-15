@@ -50,8 +50,8 @@
 | 390 | 手牌超出上限，不允许抽卡 | 否 |
 | 4\*\* | 购买类 | - |
 | 400 | 商品未找到 | 否 |
-| 410 | 击毙不足 | 否 |
-| 411 | 活动pt不足 | 否 |
+| 410 | 击毙不足 | 是 |
+| 411 | 活动pt不足 | 是 |
 | 420 | 标记的雷不合法 | 是 |
 | 421 | 提交的起始词不合法 | 是 |
 | 422 | 提交的奖励词不合法 | 是 |
@@ -166,17 +166,60 @@
 | `word` | string | 接龙词 |
 | `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## 添加状态
-
-
-## 触发状态
-
-## 击毙变动
+## status_add 添加状态
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `jibi_change` | interger | 击毙变动值 |
-| `reason` | string | 变动理由 |
+| `name` | string | 状态名称 |
+| `description` | string | 状态描述 |
+| `dodge` | bool | 是否闪避 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## status_remove 移除状态
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `name` | string | 状态名称 |
+| `description` | string | 状态描述 |
+| `dodge` | bool | 是否闪避 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## jibi_change 击毙变动
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `jibi_change` | integer | 击毙变动值 |
+| `current_jibi` | integer | 变动后击毙值 |
+| `is_buy` | bool | 是否是购买 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## eventpt_change 活动pt变动
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `eventpt_change` | integer | 活动pt变动值 |
+| `current_eventpt` | integer | 变动后活动pt值 |
+| `is_buy` | bool | 是否是购买 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## death 死亡
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `time` | integer | 死亡时间，单位分钟 |
+| `dodge` | bool | 是否闪避 |
+| `killer` | int | 杀人者的qq，-1代表无 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## attack 攻击
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `name` | string | 攻击名 |
+| `dodge` | bool | 是否闪避 |
+| `attacker` | int | 杀人者的qq，-1代表无 |
+| `attacker_settlement` | `list[ProtocolData]` | 攻击者相关嵌套结算 |
+| `defender_settlement` | `list[ProtocolData]` | 被攻击者相关嵌套结算，按顺序晚于攻击者相关结算 |
 
 ## 获得物品
 
@@ -222,7 +265,7 @@
 
 ## settlement 其他结算
 
-此项一般不会输出至用户端（但仍会打包发送出去），用于记录log或是统计数据。
+此项一般不会明显显示（但仍会打包发送出去），用于更新显示、记录log或是统计数据。
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
