@@ -19,17 +19,18 @@
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `error_code` | integer | 异常代码，表示失败原因 |
-| `error_msg` | string | 其他原因说明，有时有用 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算，有时有用 |
 
-| `error_code` | 说明 | 是否需要`error_msg` |
+| `error_code` | 说明 | 是否需要`settlement` |
 | ------------ | ---- | ----------------- |
 | 0 | 运行时错误 | 是 |
 | 1\*\* | 接龙类 | - |
 | 100 | 节点未找到 | 否 |
 | 101 | 节点已分叉，并不可再次分叉 | 否 |
 | 102 | 节点不是活动节点，且不可分叉 | 否 |
-| 110 | 接龙词不合法 | 是 |
+| 110 | 接龙词包含非法字符 | 否 |
 | 120 | 未达到接龙间隔 | 是 |
+| 121 | 无法接龙 | 是 |
 | 190 | 手牌超出上限，不允许接龙 | 否 |
 | 2\*\* | 使用类 | - |
 | 200 | 未找到卡牌 | 否 |
@@ -142,16 +143,31 @@
 | ----- | ------- | ---- |
 | `keywords` | `list[string]` | 奖励词内容 |
 
+## duplicate_word 接到重复词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `word` | string | 词内容 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
+## bomb 接到炸弹
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `word` | string | 词内容 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+
 ## dragon 成功接龙
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `father_node_id` | string | 父节点编号 |
 | `node_id` | string | 接龙节点编号 |
-| `dragon_content` | string | 接龙内容 |
-| `fork` | boolean | 分叉 |
+| `word` | string | 接龙词 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
 ## 添加状态
+
 
 ## 触发状态
 
@@ -204,5 +220,13 @@
 
 ## 麻将
 
+## settlement 其他结算
+
+此项一般不会输出至用户端（但仍会打包发送出去），用于记录log或是统计数据。
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `event_name` | string | 结算名称 |
+| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
 
