@@ -2,7 +2,7 @@
 
 输出由代表响应的数据段组成的list构成。此接口兼用于写log，与保存统计数据。
 
-每个数据段都必须包含`type`字段，标明输出类型。对于不同的输出，其余参数如下。
+每个数据段都必须包含`type`字段，标明输出类型，以及`qq`字段，标明玩家。对于不同的输出，其余参数如下。
 
 # 结算相关类型
 
@@ -19,7 +19,6 @@
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `error_code` | integer | 异常代码，表示失败原因 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算，有时有用 |
 
 | `error_code` | 说明 | 是否需要`settlement` |
 | ------------ | ---- | ----------------- |
@@ -65,7 +64,7 @@
 | 5\*\* | 弃牌类 | - |
 | 500 | 未找到卡牌 | 否 |
 | 501 | 卡牌不在手牌内 | 否 |
-| 202 | 卡牌不满足弃牌要求 | 是 |
+| 502 | 卡牌不满足弃牌要求 | 是 |
 | 510 | 未在手牌超出上限时使用 | 否 |
 | 6\*\* | 分叉 | - |
 | 600 | 节点未找到 | 否 |
@@ -114,28 +113,12 @@
 | `player` | 玩家 |
 | `hand_maj` | 手中的麻将牌 |
 
-## keyword 接到奖励词
-
-| 字段名 | 数据类型 | 说明 |
-| ----- | ------- | ---- |
-| `keyword` | string | 奖励词内容 |
-| `jibi` | integer | 奖励击毙 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
-| `left` | integer | 今日剩余奖励词击毙数 |
-
 ## update_keyword 更新奖励词
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `keyword` | string | 奖励词内容 |
-
-## hidden_keyword 接到隐藏奖励词
-
-| 字段名 | 数据类型 | 说明 |
-| ----- | ------- | ---- |
-| `keyword` | string | 隐藏奖励词内容 |
 | `jibi` | integer | 奖励击毙 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
 ## update_hidden_keyword 更新隐藏奖励词
 
@@ -143,83 +126,119 @@
 | ----- | ------- | ---- |
 | `keywords` | `list[string]` | 奖励词内容 |
 
-## duplicate_word 接到重复词
+## 与结算对应的部分
+
+### OnKeyword 接到奖励词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `keyword` | string | 奖励词内容 |
+| `jibi` | integer | 奖励击毙 |
+| `left` | integer | 今日剩余奖励词击毙数 |
+
+### OnHiddenKeyword 接到隐藏奖励词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `keyword` | string | 隐藏奖励词内容 |
+
+### OnDuplicatedWord 接到重复词
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `word` | string | 词内容 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## bomb 接到炸弹
+### OnBombed 接到炸弹
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `word` | string | 词内容 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## dragon 成功接龙
+### OnDragoned 成功接龙
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `father_node_id` | string | 父节点编号 |
 | `node_id` | string | 接龙节点编号 |
 | `word` | string | 接龙词 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## status_add 添加状态
-
-| 字段名 | 数据类型 | 说明 |
-| ----- | ------- | ---- |
-| `name` | string | 状态名称 |
-| `description` | string | 状态描述 |
-| `dodge` | bool | 是否闪避 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
-
-## status_remove 移除状态
+### OnStatusAdd 添加状态
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `name` | string | 状态名称 |
-| `description` | string | 状态描述 |
+| `status` | ProtocolData | 状态，`type: "status"` |
 | `dodge` | bool | 是否闪避 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## jibi_change 击毙变动
+### OnStatusRemove 移除状态
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `status` | ProtocolData | 状态，`type: "status"` |
+| `dodge` | bool | 是否闪避 |
+
+### OnJibiChange 击毙变动
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `jibi_change` | integer | 击毙变动值 |
 | `current_jibi` | integer | 变动后击毙值 |
 | `is_buy` | bool | 是否是购买 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## eventpt_change 活动pt变动
+### OnEventPtChange 活动pt变动
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `eventpt_change` | integer | 活动pt变动值 |
 | `current_eventpt` | integer | 变动后活动pt值 |
 | `is_buy` | bool | 是否是购买 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## death 死亡
+### OnDeath 死亡
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `time` | integer | 死亡时间，单位分钟 |
 | `dodge` | bool | 是否闪避 |
 | `killer` | int | 杀人者的qq，-1代表无 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
 
-## attack 攻击
+## attacked 被攻击
+
+对应结算有攻击者方和被攻击者方两个。
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `name` | string | 攻击名 |
 | `dodge` | bool | 是否闪避 |
-| `attacker` | int | 杀人者的qq，-1代表无 |
-| `attacker_settlement` | `list[ProtocolData]` | 攻击者相关嵌套结算 |
-| `defender_settlement` | `list[ProtocolData]` | 被攻击者相关嵌套结算，按顺序晚于攻击者相关结算 |
+| `attacker` | int | 攻击者的qq |
+
+## draw_and_use 抽即用卡牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: "card"` |
+
+## use_card 使用卡牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `card` | `ProtocolData` | 使用的卡牌，`type: "card"` |
+
+## draw_cards 抽取卡牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: "card"` |
+
+## discard_cards 弃牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `cards` | `list[ProtocolData]` | 弃置的卡牌列表，`type: "card"` |
+
+## remove_cards 烧牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `cards` | `list[ProtocolData]` | 移除的卡牌列表，`type: "card"` |
 
 ## 获得物品
 
@@ -237,24 +256,6 @@
 | `subject_name` | string | 物品名 |
 | `subject_effect` | string | 物品效果 |
 
-## 获得卡牌
-
-| 字段名 | 数据类型 | 说明 |
-| ----- | ------- | ---- |
-| `card_id` |
-| `card_name` |
-| `card_description` |
-| `consumed_on_draw` | boolean |
-
-## 使用卡牌
-
-| 字段名 | 数据类型 | 说明 |
-| ----- | ------- | ---- |
-| `is_draw_and_use` | boolean |
-| `card_id` |
-| `card_name` |
-| `card_effect` |
-
 ## 获得装备
 
 ## 使用装备
@@ -263,13 +264,39 @@
 
 ## 麻将
 
-## settlement 其他结算
+## begin 结算开始
 
-此项一般不会明显显示（但仍会打包发送出去），用于更新显示、记录log或是统计数据。
+此项一般不会明显显示（但仍会打包发送出去），表示一项结算开始（push stack），用于更新显示、记录log或是统计数据。
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `event_name` | string | 结算名称 |
-| `settlement` | `list[ProtocolData]` | 相关嵌套结算 |
+| `name` | string | 结算名称 |
 
+## end 结算结束
 
+此项一般不会明显显示（但仍会打包发送出去），表示一项结算结束（pop stack），仅用于没有相同名字的结算（如BeforeDragoned）。用于更新显示、记录log或是统计数据。如果有failed，一般就没有end了。
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `name` | string | 结算名称 |
+
+## 信息相关
+
+### card 卡牌信息
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | 卡牌id |
+| `name` | string | 卡牌名 |
+| `description` | string | 卡牌描述 |
+| `eff_draw` | bool | 是否是抽到即生效的卡牌 |
+
+### status 状态信息
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | 状态id |
+| `name` | string | 状态名 |
+| `description` | string | 状态描述 |
+| `null` | bool | 是否是可堆叠状态 |
+| `count` | integer | 状态层数 |
