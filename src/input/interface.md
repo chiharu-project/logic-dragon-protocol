@@ -63,26 +63,25 @@
 可查询内容包含：
 
 | 内容名 | 说明 |
-| ----- | --- |
-<!-- | 奖励词/keyword | 查询当前奖励词。 |
-| 奖励池/keyword_pool | 查询当前奖励词池大小。 |
-| 起始池/begin_pool | 查询当前起始词池大小。 |
-| 隐藏奖励池/hidden_keyword_pool | 查询当前隐藏奖励池大小。 |
-| 卡池/card_pool | 查询当前卡池总卡数。 |
-| 活动词/active | 查询当前可以接的词。 |
-| 复活时间/recover_time | 查询自己的复活时间。 |
-| 状态/status | 查询自己当前状态。 |
-| 详细状态/full_status | 查询自己当前详细状态。 |
-| 全局状态/global_status | 查询当前全局状态。 |
-| 资料/profile | 查询自己当前资料。 |
-| 手牌/hand_cards | 查询自己当前手牌。 |
-| 详细手牌/full_hand_cards | 查询自己当前详细手牌。 |
-| 装备/equipments | 查询自己当前装备。 |
-| 任务/quest | 查询自己手牌中的任务之石的任务。 |
-| 麻将/maj | 查询自己的麻将。 |
-| 击毙/jibi | 查询自己的击毙数。 |
-| 商店/shop | 查询可购买项目。 |
-| bingo | 查询bingo活动进度。 | -->
+| ----- | ---- |
+| keyword_pool | 查询当前奖励词池大小。 |
+| begin_pool | 查询当前起始词池大小。 |
+| hidden_keyword_pool | 查询当前隐藏奖励池大小。 |
+| card_pool | 查询当前卡池总卡数。 |
+| keyword | 查询当前奖励词。 |
+| active | 查询当前可以接的词。 |
+| recover_time | 查询自己的复活时间。 |
+| status | 查询自己当前状态。 |
+| global_status | 查询当前全局状态。 |
+| profile | 查询自己当前资料。 |
+| global_profile | 查询全局资料。 |
+| hand_cards | 查询自己当前手牌。 |
+| equipments | 查询自己当前装备。 |
+| quest | 查询自己手牌中的任务之石的任务。 |
+| maj | 查询自己的麻将。 |
+| jibi | 查询自己的击毙数。 |
+| shop | 查询可购买项目。 |
+| bingo | 查询bingo活动进度。 |
 
 ## buy 购买商品
 

@@ -4,10 +4,6 @@
 
 每个数据段都必须包含`type`字段，标明输出类型，以及`qq`字段，标明玩家。对于不同的输出，其余参数如下。
 
-# 结算相关类型
-
-
-
 # 可能的输出及包含的数据
 
 ## succeed 成功
@@ -166,14 +162,14 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `status` | ProtocolData | 状态，`type: "status"` |
+| `status` | ProtocolData | 状态，`type: status` |
 | `dodge` | bool | 是否闪避 |
 
 ### OnStatusRemove 移除状态
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `status` | ProtocolData | 状态，`type: "status"` |
+| `status` | ProtocolData | 状态，`type: status` |
 | `dodge` | bool | 是否闪避 |
 
 ### OnJibiChange 击毙变动
@@ -214,47 +210,45 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: "card"` |
+| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: card` |
 
 ## use_card 使用卡牌
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `card` | `ProtocolData` | 使用的卡牌，`type: "card"` |
+| `card` | `ProtocolData` | 使用的卡牌，`type: card` |
 
 ## draw_cards 抽取卡牌
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: "card"` |
+| `cards` | `list[ProtocolData]` | 抽到的卡牌列表，`type: card` |
 
 ## discard_cards 弃牌
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `cards` | `list[ProtocolData]` | 弃置的卡牌列表，`type: "card"` |
+| `cards` | `list[ProtocolData]` | 弃置的卡牌列表，`type: card` |
 
 ## remove_cards 烧牌
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `cards` | `list[ProtocolData]` | 移除的卡牌列表，`type: "card"` |
+| `cards` | `list[ProtocolData]` | 移除的卡牌列表，`type: card` |
 
-## 获得物品
+## get_item 获得物品
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `subject_id` | interger | 物品ID |
-| `subject_name` | string | 物品名 |
-| `subject_description` | string | 物品描述 |
+| `count` | `integer` | 物品个数 |
+| `useable_item` | `ProtocolData` | 物品信息，`type: useable_item` |
 
 ## 使用物品
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `subject_id` | interger | 物品ID |
-| `subject_name` | string | 物品名 |
-| `subject_effect` | string | 物品效果 |
+| `count` | `integer` | 物品个数 |
+| `useable_item` | `ProtocolData` | 物品信息，`type: useable_item` |
 
 ## 获得装备
 
@@ -300,3 +294,171 @@
 | `description` | string | 状态描述 |
 | `null` | bool | 是否是可堆叠状态 |
 | `count` | integer | 状态层数 |
+
+### equipment 状态信息
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | 装备id |
+| `name` | string | 装备名 |
+| `description` | string | 装备描述 |
+
+### useable_item 可使用物品信息
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | 状态id |
+| `name` | string | 状态名 |
+| `description` | string | 状态描述 |
+
+### node 接龙树节点
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | string | 节点id |
+| `word` | string | 接龙词 |
+| `status` | string | 可选，在查询活动词时表示该词是否因距离过近不可接龙（`too_near`），或是因为不可接龙状态不可接龙（`cant_dragon`） |
+
+### quest 任务
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | 任务id |
+| `description` | string | 任务描述 |
+| `jibi` | integer | 完成奖励击毙数 |
+| `count` | integer | 剩余完成次数 |
+
+### sign 星座
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `id` | integer | id |
+| `name` | string | 星座名 |
+| `description` | string | 星座描述 |
+
+## check 查询结果
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `arg` | string | 查询内容 |
+
+可查询内容包含：
+
+| 内容名 | 说明 |
+| ----- | ---- |
+| keyword_pool | 查询当前奖励词池大小。 |
+| begin_pool | 查询当前起始词池大小。 |
+| hidden_keyword_pool | 查询当前隐藏奖励池大小。 |
+| card_pool | 查询当前卡池总卡数。 |
+| keyword | 查询当前奖励词。 |
+| active | 查询当前可以接的词。 |
+| recover_time | 查询自己的复活时间。 |
+| profile | 查询自己当前资料。 |
+| global_profile | 查询全局资料。 |
+| hand_cards | 查询自己当前手牌。 |
+| status | 查询自己当前状态。 |
+| global_status | 查询当前全局状态。 |
+| equipments | 查询自己当前装备。 |
+| useable_items | 查询自己当前物品。 |
+| quests | 查询自己手牌中的任务之石的任务。 |
+| maj | 查询自己的麻将。 |
+| jibi | 查询自己的击毙数。 |
+| shop | 查询可购买项目。 |
+| bingo | 查询bingo活动进度。 |
+
+其他查询结果如下：
+
+### *_pool 池大小
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `pool` | integer | 大小数据 |
+
+### keyword 奖励词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `keyword` | string | 奖励词 |
+
+### active 活动词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `shouwei` | bool | 表示接龙者是否应遵循首尾接龙规则，不考虑诸如`USB Type-C`等的转换。 |
+| `weishou` | bool | 表示接龙者是否应遵循尾首接龙规则，不考虑诸如`USB Type-C`等的转换。 |
+| `words` | `list[ProtocolData]` | 活动词列表，每个词`type: node` |
+
+### recover_time 复活时间
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `time` | integer | 复活时间 |
+
+### profile 资料
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `jibi_time` | integer | 今日剩余获得击毙次数 |
+| `keyword_jibi` | integer | 今日剩余获得关键词击毙 |
+| `draw_time` | integer | 抽卡券 |
+| `card_limit` | integer | 手牌上限 |
+
+### global_profile 全局资料
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `sign` | ProtocolData | 当前星座，`type: sign` |
+
+### hand_cards 手牌
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `cards` | `list[ProtocolData]` | 卡牌列表，`type: card` |
+
+### *status 状态/全局状态
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `status` | `list[ProtocolData]` | 状态列表，`type: status` |
+
+### equipments 装备
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `equipments` | `list[ProtocolData]` | 装备列表，`type: equipment` |
+
+### useable_items 可使用物品
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `useable_items` | `list[ProtocolData]` | 可使用物品列表，`type: useable_item` |
+
+### quests 任务
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `quests` | `list[ProtocolData]` | 任务列表，`type: quest` |
+
+### maj 麻将
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| TODO | TODO | TODO |
+
+### jibi 击毙
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `jibi` | integer | 当前击毙数 |
+
+### shop 商店
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| TODO | TODO | TODO |
+
+### bingo bingo活动进度
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| TODO | TODO | TODO |
