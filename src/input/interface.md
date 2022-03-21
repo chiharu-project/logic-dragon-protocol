@@ -70,7 +70,6 @@
 | card_pool | 查询当前卡池总卡数。 |
 | keyword | 查询当前奖励词。 |
 | active | 查询当前可以接的词。 |
-| recover_time | 查询自己的复活时间。 |
 | status | 查询自己当前状态。 |
 | global_status | 查询当前全局状态。 |
 | profile | 查询自己当前资料。 |
