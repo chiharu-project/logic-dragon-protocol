@@ -104,6 +104,7 @@
 | `card_list` | `list[integer]` | 在`object`是`card`时使用，代表需要从中选择的卡牌列表 |
 | `min` | integer | 选择的最少的个数 |
 | `max` | integer | 选择的最多的个数 |
+| `player_list` | `list[integer] | null` | 在`object`是`player`时使用，代表可选玩家，若为null则为任意玩家 |
 
 | `object` | 说明 |
 | -------- | ---- |
