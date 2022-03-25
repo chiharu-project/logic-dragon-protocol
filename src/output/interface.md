@@ -113,6 +113,13 @@
 | `player` | 玩家 |
 | `hand_maj` | 手中的麻将牌 |
 
+## update_begin_word 更新起始词
+
+| 字段名 | 数据类型 | 说明 |
+| ----- | ------- | ---- |
+| `word` | string | 起始词内容 |
+| `pic` | string | 图片base64 |
+
 ## update_keyword 更新奖励词
 
 | 字段名 | 数据类型 | 说明 |
