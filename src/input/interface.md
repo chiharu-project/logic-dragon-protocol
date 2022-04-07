@@ -26,7 +26,8 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `id` | integer | 欲使用卡牌的id号 | <!-- TODO 在手牌里的第几张？ -->
+| `id` | integer | 欲使用卡牌的id号 |
+| `data` | string | 欲使用卡牌的额外信息 |
 
 ## use_equipment 使用装备
 
@@ -44,7 +45,7 @@
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
-| `cards` | `list[int]` | 由卡牌id号组成的列表 | <!-- TODO 在手牌里的第几张？ -->
+| `cards` | `list[ProtocolData]` | 由卡牌组成的列表，`type: "card"` |
 
 ## draw 抽卡
 
@@ -103,11 +104,11 @@
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
 | `object` | string | 需要选择的物品，与output中的choose相同，见下表 |
-| `chosen` | `list[integer]` | 选择到的卡牌列表，在没有可选择的卡牌时返回空列表 |
+| `chosen` | `list[data]` | 选择到的卡牌列表，在没有可选择的卡牌时返回空列表 |
 
 | `object` | 说明 | `chosen`代表 |
 | -------- | ---- | ---------- |
-| `hand_card` | 手牌 | 手牌的第几张 |
+| `hand_card` | 手牌 | 手牌信息，`type: "card"` |
 | `card` | 卡牌列表 | 卡牌id号 |
 | `player` | 玩家 | 玩家qq号 |
 | `hand_maj` | 手中的麻将牌 | 麻将牌的第几张 |
