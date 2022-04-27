@@ -255,7 +255,7 @@
 | `count` | `integer` | 物品个数 |
 | `useable_item` | `ProtocolData` | 物品信息，`type: useable_item` |
 
-## 使用物品
+## use_item 使用物品
 
 | 字段名 | 数据类型 | 说明 |
 | ----- | ------- | ---- |
